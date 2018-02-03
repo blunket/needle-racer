@@ -4,12 +4,17 @@ const url = require('url')
 
 let win
 
+global.settings = {
+	less_movement : false,
+	sound         : true,
+}
+
 function createWindow () {
 	win = new BrowserWindow({
 		width: 1200,
 		height: 600,
-		minWidth: 1000,
-		minHeight: 500,
+		minWidth: 1200,
+		minHeight: 600,
 		fullscreen: true,
 		// frame: false
 	})

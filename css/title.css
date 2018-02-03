@@ -1,15 +1,33 @@
 body {
 	background-color: #607063;
+	background-image: url('../img/fabric-seamless.jpg');
+	animation: backgroundpan 1.5s linear infinite;
 }
 h1 {
-	color: #fff;
-	font-size: 40px;
+	color: #f00;
+	font-size: 30px;
+	font-family: "Patchwork";
+	text-align: center;
 }
 #tag {
-	animation: textzoom .5s infinite alternate;
-	color: #fff;
-	font-size: 20px;
+	animation: textzoom .5s infinite alternate, rainbow 2s linear infinite alternate;
+	color: purple;
+	font-size: 40px;
+	font-family: "Amatic";
+	font-weight: 700;
+	text-align: center;
 }
+
+@keyframes rainbow {
+	0%     { color: red;    }
+	16.67% { color: orange; }
+	33.33% { color: yellow; }
+	50%    { color: green;  }
+	66.67% { color: blue;   }
+	83.33% { color: indigo; }
+	100%   { color: violet; }
+}
+
 /*
 #wrapper {
 	position: absolute;
@@ -39,10 +57,11 @@ h1 {
 #right {
 	right: 0px;
 }
-#menu-wrapper {
+.menu-wrapper {
+	position: relative;
 	display: block;
-	width: 50vh;
-	height: 70vh;
+	width: 70%;
+	height: 80%;
 	background-color: rgba(255, 255, 255, 0.9);
 	color: #000;
 	margin: 50px;
@@ -51,19 +70,51 @@ h1 {
 	display: block;
 	width: 100%;
 	padding: 20px 40px;
-	font-size: 30px;
+	font-size: 56px;
 	text-transform: uppercase;
 }
 .menu-button.active {
 	font-weight: 700;
-	border-left: 8px solid #000;
+	/*border-left: 8px solid #000;*/
+	position: relative;
 }
-
+#options-menu {
+	display: none;
+}
+#needle-cursor {
+	position: absolute;
+	right: calc(100% + 10px);
+	display: block;
+	top: 0px;
+	transition: top .2s;
+}
+/*
+.menu-button.active::before {
+	display: block;
+	width: 40px;
+	height: 37px;
+	position: absolute;
+	right: 100%;
+	background-image: url('../img/needle.png');
+	background-repeat: no-repeat;
+	background-size: 40px 37px;
+	background-position: center center;
+}
+*/
 @keyframes textzoom {
 	0% {
 		transform: scale(1);
 	}
 	100% {
 		transform: scale(1.2);
+	}
+}
+
+@keyframes backgroundpan {
+	0% {
+		background-position: 0px 0px;
+	}
+	100% {
+		background-position: -640px 0px;
 	}
 }

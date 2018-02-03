@@ -1,8 +1,20 @@
 @font-face {
-	font-family: 'Open Sans';
+	font-family: 'Amatic';
 	font-style: normal;
 	font-weight: 400;
-	src: url('OpenSans.woff2') format('woff2');
+	src: url('AmaticSC-Regular.ttf');
+}
+@font-face {
+	font-family: 'Amatic';
+	font-style: normal;
+	font-weight: 700;
+	src: url('AmaticSC-Bold.ttf');
+}
+@font-face {
+	font-family: 'Patchwork';
+	font-style: normal;
+	font-weight: 400;
+	src: url('PatchworkStitchlings.ttf');
 }
 
 * {
@@ -18,7 +30,7 @@ html, body {
 }
 
 body {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Amatic', sans-serif;
 }
 
 #game {

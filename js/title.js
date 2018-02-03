@@ -1,24 +1,30 @@
 // title screen functions
+mainmenu();
+updateMovements();
 
 let taunts = [
-	'Stop running with scissors!',
+	'Collect the buttons!',
+	'Don\'t run with scissors!',
 	'Sharpen up!',
 	'Get to the point!',
-	'You needle some more thread?',
+	'Needle some more thread?',
 	'And sew it begins...',
 	'Mend your ways!',
-	'Weave gotta stop this!',
-	'That\'s knot right...',
-	'Next patch: your skills'
+	'Weave gotta get going!',
+	'Something\'s knot right...',
+	'Next patch: your skills',
+	'Button up, let\'s go!',
 ];
 
-// get querystring
-var queryDict = {}
-location.search.substr(1).split("&").forEach(function(item) {queryDict[item.split("=")[0]] = item.split("=")[1]})
-if (typeof queryDict.taunts !== 'undefined') {
-	$("#tag").text(taunts[Math.floor(Math.random()*taunts.length)])
-}
+$("#tag").text(taunts[Math.floor(Math.random()*taunts.length)])
 
+function updateCursor() {
+	if ($(".menu-button:visible.active").length == 0) {
+		$('.menu-button.active').removeClass('active');
+		$('.menu-button:visible').first().addClass('active');
+	}
+	$("#needle-cursor").css('top', $(".menu-button:visible.active").eq(0).position().top);
+}
 
 function Up() {
 	let $prev = $('.menu-button:visible.active').eq(0).prev('.menu-button:visible');
@@ -28,6 +34,7 @@ function Up() {
 	} else {
 		$prev.addClass('active');
 	}
+	updateCursor();
 }
 function Down() {
 	let $next = $('.menu-button:visible.active').eq(0).next('.menu-button:visible');
@@ -37,6 +44,7 @@ function Down() {
 	} else {
 		$next.addClass('active');
 	}
+	updateCursor();
 }
 function Right() {
 	return Down();
@@ -57,8 +65,42 @@ function Space() {
 	return Enter();
 }
 function play() {
-	window.location = 'index.html';
+	window.location = 'game.html';
 }
-function title(){
-	window.location = 'title.html';
+function opts() {
+	$(".options-menu").show();
+	$(".main-menu").hide();
+	updateCursor();
+}
+function mainmenu() {
+	$(".options-menu").hide();
+	$(".main-menu").show();
+	updateCursor();
+}
+function updateMovements() {
+	if (remote.getGlobal('settings').less_movement) {
+		$("#tag").css("animation", "none");
+		$("body").css("animation", "none");
+	} else {
+		$("#tag").css("animation", "textzoom .5s infinite alternate, rainbow 2s linear infinite alternate");
+		$("body").css("animation", "backgroundpan 1.5s linear infinite");
+	}
+}
+function toggmovement() {
+	if (remote.getGlobal('settings').less_movement) {
+		remote.getGlobal('settings').less_movement = false;
+	} else {
+		remote.getGlobal('settings').less_movement = true;
+	}
+	updateMovements()
+}
+function toggsound() {
+	if (remote.getGlobal('settings').sound) {
+		remote.getGlobal('settings').sound = false;
+	} else {
+		remote.getGlobal('settings').sound = true;
+	}
+}
+function Esc() {
+	quit();
 }

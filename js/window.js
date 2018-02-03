@@ -3,11 +3,11 @@ const win = remote.getCurrentWindow();
 
 document.addEventListener("keydown", event => {
 	if (event.key === "F11" || (event.altKey && event.key === "Enter")) {
-        if (win.isFullScreen()) {
-            win.setFullScreen(false);
-        } else {
-            win.setFullScreen(true);
-        }
+        toggleFullScreen();
+	}
+
+	if (event.key == "Enter" && !event.altKey) {
+		Enter();
 	}
 
 	if (event.key === "F12") {
@@ -15,11 +15,7 @@ document.addEventListener("keydown", event => {
 	}
 
 	if (event.key == "Escape") {
-		quit();
-	}
-
-	if (event.key == "Enter") {
-		Enter();
+		Esc();
 	}
 	if (event.key == "Spacebar" || event.key == " ") {
 		Space();
@@ -41,4 +37,12 @@ document.addEventListener("keydown", event => {
 
 function quit() {
 	win.close();
+}
+
+function toggfullscreen() {
+	if (win.isFullScreen()) {
+	    win.setFullScreen(false);
+	} else {
+	    win.setFullScreen(true);
+	}
 }
