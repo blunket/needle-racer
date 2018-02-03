@@ -31,3 +31,6 @@ body {
 	animation: textzoom .5s infinite alternate, rainbow 2s linear infinite alternate;
 }
 
+#game {
+	display: block;
+}

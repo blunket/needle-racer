@@ -34,10 +34,6 @@ body {
 	background-color: #ccc;
 }
 
-#game {
-	display: block;
-}
-
 @keyframes rainbow {
 	0%     { color: red;    }
 	16.67% { color: orange; }
