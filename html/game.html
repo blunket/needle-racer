@@ -3,11 +3,20 @@
 <head>
 	<title>Needle Racer</title>
 	<link rel="stylesheet" type="text/css" href="../css/styles.css">
+	<link rel="stylesheet" type="text/css" href="../css/game.css">
 </head>
 <body>
 	<canvas id="game"></canvas>
 
-	<div id="story"></div>
+	<div id="story">
+		<div id="story-message"></div>
+		<p id="story-hint">( space to skip )</p>
+	</div>
+
+	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+	<script src="../js/jquery-3.3.1.slim.min.js"></script>
+	<script src="../js/typed.min.js"></script>
+	<script>if (window.module) module = window.module;</script>
 
 	<script src="../js/window.js"></script>
 	<script src="../js/game.js"></script>
