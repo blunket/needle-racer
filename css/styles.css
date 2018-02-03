@@ -1,0 +1,26 @@
+@font-face {
+	font-family: 'Open Sans';
+	font-style: normal;
+	font-weight: 400;
+	src: url('OpenSans.woff2') format('woff2');
+}
+
+* {
+	box-sizing: border-box;
+	cursor: none;
+}
+
+html, body {
+	margin: 0px;
+	padding: 0px;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	font-family: 'Open Sans', sans-serif;
+}
+
+#game {
+	display: block;
+}
