@@ -31,6 +31,7 @@ html, body {
 
 body {
 	font-family: 'Amatic', sans-serif;
+	background-color: #ccc;
 }
 
 #game {
