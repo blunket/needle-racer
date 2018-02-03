@@ -37,3 +37,31 @@ body {
 #game {
 	display: block;
 }
+
+@keyframes rainbow {
+	0%     { color: red;    }
+	16.67% { color: orange; }
+	33.33% { color: yellow; }
+	50%    { color: green;  }
+	66.67% { color: blue;   }
+	83.33% { color: indigo; }
+	100%   { color: violet; }
+}
+
+@keyframes textzoom {
+	0% {
+		transform: scale(1);
+	}
+	100% {
+		transform: scale(1.2);
+	}
+}
+
+@keyframes backgroundpan {
+	0% {
+		background-position: 0px 0px;
+	}
+	100% {
+		background-position: -640px 0px;
+	}
+}

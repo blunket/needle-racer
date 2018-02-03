@@ -1,0 +1,33 @@
+body {
+	overflow: hidden;
+}
+
+#story {
+	display: flex;
+	position: absolute;
+	z-index: 1000;
+	top: 0px;
+	left: 0px;
+	width: 100vw;
+	height: 100vh;
+	background-color: #000;
+	color: #fff;
+	font-family: "Amatic";
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+}
+
+#story-message {
+	font-size: 72px;
+}
+
+#story-hint {
+	font-size: 30px;
+	position: absolute;
+	bottom: 20px;
+	width: 100vw;
+	text-align: center;
+	animation: textzoom .5s infinite alternate, rainbow 2s linear infinite alternate;
+}
+
