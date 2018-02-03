@@ -9,6 +9,21 @@ function resizeCanvas() {
 	c.height = window.innerHeight;
 }
 
+story();
+
+function story() {
+	console.log("test");
+	var typed = new Typed('#story-message', {
+		strings: ["Hi there.", "Allow me to introduce myself.", "My name is ...", "My name is Mr. Grumpy ButtonEyes.", "My name is Mr. Grumpy ButtonEyes. ... The third."],
+		typeSpeed: 10,
+		startDelay: 1000,
+		backDelay: 3000,
+		loop: false,
+		smartBackspace: true,
+		showCursor: false,
+	})
+}
+
 function draw() {
 
 }
