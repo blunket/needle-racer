@@ -28,18 +28,6 @@ h1 {
 	100%   { color: violet; }
 }
 
-/*
-#wrapper {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	display: flex;
-	width: 100%;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	flex-direction: column;
-}*/
 #left, #right {
 	display: flex;
 	align-items: center;
@@ -88,19 +76,7 @@ h1 {
 	top: 0px;
 	transition: top .2s;
 }
-/*
-.menu-button.active::before {
-	display: block;
-	width: 40px;
-	height: 37px;
-	position: absolute;
-	right: 100%;
-	background-image: url('../img/needle.png');
-	background-repeat: no-repeat;
-	background-size: 40px 37px;
-	background-position: center center;
-}
-*/
+
 @keyframes textzoom {
 	0% {
 		transform: scale(1);
