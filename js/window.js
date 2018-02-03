@@ -3,7 +3,7 @@ const win = remote.getCurrentWindow();
 
 document.addEventListener("keydown", event => {
 	if (event.key === "F11" || (event.altKey && event.key === "Enter")) {
-        toggleFullScreen();
+        toggfullscreen();
 	}
 
 	if (event.key == "Enter" && !event.altKey) {
