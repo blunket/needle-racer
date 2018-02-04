@@ -1,13 +1,14 @@
+/*
 var c   = document.getElementById("game");
 var ctx = c.getContext("2d");
 
 window.addEventListener("load", resizeCanvas);
 window.addEventListener("resize", resizeCanvas);
-
 function resizeCanvas() {
 	c.width = window.innerWidth;
 	c.height = window.innerHeight;
 }
+*/
 
 if (remote.getGlobal('settings').less_movement) {
 	$("#story-hint, #instructions-hint").css("animation", "none");
@@ -86,7 +87,7 @@ function startGame() {
 	playaudio("#game-theme");
 	resetNeedle();
 	$("#instructions").fadeOut();
-	setInterval(Step, 30);
+	Step();
 }
 
 function draw() {
@@ -94,11 +95,12 @@ function draw() {
 function Step() {
 	needleTop = $("#needle").position().top;
 	if (key_down && needleTop < (window.innerHeight - 20)) {
-		$("#needle").css("top", needleTop + 10);
+		$("#needle").css("top", needleTop + 50);
 	}
 	if (key_up && needleTop > 20) {
-		$("#needle").css("top", needleTop - 10);
+		$("#needle").css("top", needleTop - 50);
 	}
+	setTimeout(Step, 30);
 }
 function Space() {
 	if (story_playing) {
@@ -114,15 +116,15 @@ function Down() {
 function KeyDown() {
 	if (!(story_playing || instructions_open)) {
 		if (key_down === true) {
-			$("#needle").css("transform", "rotate(20deg)");
+			$("#needle img").css("transform", "rotate(20deg)");
 		} else if (key_up === true) {
-			$("#needle").css("transform", "rotate(-20deg)");
+			$("#needle img").css("transform", "rotate(-20deg)");
 		}
 	}
 }
 function KeyUp() {
 	if (!key_down && !key_up) {
-		$("#needle").css("transform", "rotate(0deg)");
+		$("#needle img").css("transform", "rotate(0deg)");
 	}
 }
 function Left() {

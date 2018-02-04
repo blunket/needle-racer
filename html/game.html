@@ -6,7 +6,7 @@
 	<link rel="stylesheet" type="text/css" href="../css/game.css">
 </head>
 <body>
-	<canvas id="game"></canvas>
+	<!-- <canvas id="game"></canvas> -->
 
 	<div id="story">
 		<div id="grumpy">
@@ -48,11 +48,15 @@
 		<p id="instructions-hint">( space / enter to start game )</p>
 	</div>
 
+	<div id="domgame">
+		<div id="needle"><img src="../img/needle.png" alt="Needle"></div>
+	</div>
+
 	<audio id="grumpy-theme" src="../music/Funny Frog Loop.mp3" loop="loop"></audio>
 	<audio id="grumpy-angry-theme" src="../music/Power Bots Loop.mp3" loop="loop"></audio>
 	<audio id="game-theme" src="../music/Adrenaline loop.mp3" loop="loop"></audio>
 
-	<img src="../img/needle.png" alt="Needle" class="asset" id="needle">
+	<!-- <img src="../img/needle.png" alt="Needle" class="asset" id="needle"> -->
 
 	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
 	<script src="../js/jquery-3.3.1.min.js"></script>

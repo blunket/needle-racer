@@ -35,11 +35,17 @@ body {
 	z-index: 10000;
 }
 #domgame {
-	position: absolute;
 	z-index: 1000;
 }
 #needle {
 	position: absolute;
+	height: auto;
+	width: 200px;
+	transition: .2s all linear;
+}
+#needle img {
+	height: auto;
+	width: 100%;
 	transition: .2s all linear;
 }
 #instructions p {
@@ -73,4 +79,11 @@ body {
 #game {
 	position: absolute;
 	display: block;
+}
+.asset {
+	width: 1px;
+	height: 1px;
+	position: absolute;
+	left: -10000px;
+	top: -10000px;
 }
