@@ -1,28 +1,65 @@
 body {
+	background-color: #607063;
+	background-image: url('../img/fabric-seamless.jpg');
+	animation: backgroundpan 1.5s linear infinite;
 	overflow: hidden;
 }
-
-#story {
-	display: flex;
+#grumpy {
+	display: none;
 	position: absolute;
-	z-index: 1000;
+	top: 40px;
+}
+#grumpy img {
+	height: 300px;
+}
+#story, #instructions, #domgame {
+	display: block;
+	position: absolute;
 	top: 0px;
 	left: 0px;
 	width: 100vw;
 	height: 100vh;
-	background-color: #000;
-	color: #fff;
 	font-family: "Amatic";
+	color: #fff;
+}
+#story, #instructions {
+	display: flex;
+	z-index: 100000;
+	background-color: #000;
 	align-items: center;
 	justify-content: center;
 	flex-direction: column;
 }
-
+#instructions {
+	font-size: 40px;
+	z-index: 10000;
+}
+#domgame {
+	position: absolute;
+	z-index: 1000;
+}
+#needle {
+	position: absolute;
+	transition: .2s all linear;
+}
+#instructions p {
+	margin: 0px;
+}
+#instructions table {
+	font-size: 30px;
+	width: 500px;
+	margin: 10px;
+	background-color: rgba(255, 255, 255, .3);
+	padding: 30px;
+}
+#instructions table td {
+	text-align: center;
+}
 #story-message {
 	font-size: 72px;
 }
 
-#story-hint {
+#story-hint, #instructions-hint {
 	font-size: 30px;
 	position: absolute;
 	bottom: 20px;
@@ -30,7 +67,10 @@ body {
 	text-align: center;
 	animation: textzoom .5s infinite alternate, rainbow 2s linear infinite alternate;
 }
-
+#story-hint {
+	display: none;
+}
 #game {
+	position: absolute;
 	display: block;
 }

@@ -49,7 +49,6 @@ h1 {
 	width: 100%;
 	padding: 20px 40px;
 	font-size: 56px;
-	text-transform: uppercase;
 }
 .menu-button.active {
 	font-weight: 700;

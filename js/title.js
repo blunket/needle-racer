@@ -1,6 +1,5 @@
 // title screen functions
 mainmenu();
-updateMovements();
 
 let taunts = [
 	'Collect the buttons!',
@@ -23,7 +22,7 @@ function updateCursor() {
 		$('.menu-button.active').removeClass('active');
 		$('.menu-button:visible').first().addClass('active');
 	}
-	$("#needle-cursor").css('top', $(".menu-button:visible.active").eq(0).position().top);
+	$("#needle-cursor").css('top', $(".menu-button:visible.active").eq(0).position().top + 50);
 }
 
 function Up() {
@@ -76,6 +75,8 @@ function mainmenu() {
 	$(".options-menu").hide();
 	$(".main-menu").show();
 	updateCursor();
+	updateMovements();
+	playaudio("#title-theme");
 }
 function updateMovements() {
 	if (remote.getGlobal('settings').less_movement) {
@@ -97,10 +98,14 @@ function toggmovement() {
 function toggsound() {
 	if (remote.getGlobal('settings').sound) {
 		remote.getGlobal('settings').sound = false;
+		killaudio();
 	} else {
 		remote.getGlobal('settings').sound = true;
+		playaudio("#title-theme");
 	}
 }
 function Esc() {
 	quit();
 }
+function KeyUp() { }
+function KeyDown() { }

@@ -61,3 +61,7 @@ body {
 		background-position: -640px 0px;
 	}
 }
+
+audio {
+	display: none;
+}

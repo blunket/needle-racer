@@ -9,12 +9,54 @@
 	<canvas id="game"></canvas>
 
 	<div id="story">
+		<div id="grumpy">
+			<img src="../img/grumpy-happy.png" alt="Mr. Grumpy ButtonEyes the Third">
+		</div>
 		<div id="story-message"></div>
 		<p id="story-hint">( space / enter to skip story )</p>
 	</div>
+	<div id="instructions">
+		<p>Race for the button!</p>
+		<table>
+			<tr>
+				<td><img width="60" src="../img/scissors.gif" alt="Scissors"></td>
+				<td>Avoid</td>
+			</tr>
+			<tr>
+				<td><img width="60" src="../img/spool.png" alt="Thread"></td>
+				<td>Collect</td>
+			</tr>
+			<tr>
+				<td><img width="60" src="../img/arrow-up.png" alt="UpArrow"></td>
+				<td>Move Up</td>
+			</tr>
+			<tr>
+				<td><img width="60" src="../img/arrow-down.png" alt="DownArrow"></td>
+				<td>Move Down</td>
+			</tr>
+		<!--
+			<tr>
+				<td><img width="60" src="../img/arrow-left.png" alt="LeftArrow"></td>
+				<td>Turn Left</td>
+			</tr>
+			<tr>
+				<td><img width="60" src="../img/arrow-right.png" alt="RightArrow"></td>
+				<td>Turn Right</td>
+			</tr>
+		-->
+		</table>
+		<p id="instructions-hint">( space / enter to start game )</p>
+	</div>
+
+	<audio id="grumpy-theme" src="../music/Funny Frog Loop.mp3" loop="loop"></audio>
+	<audio id="grumpy-angry-theme" src="../music/Power Bots Loop.mp3" loop="loop"></audio>
+	<audio id="game-theme" src="../music/Adrenaline loop.mp3" loop="loop"></audio>
+
+	<img src="../img/needle.png" alt="Needle" class="asset" id="needle">
 
 	<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
-	<script src="../js/jquery-3.3.1.slim.min.js"></script>
+	<script src="../js/jquery-3.3.1.min.js"></script>
+	<script src="../js/jquery.ui.shake.min.js"></script>
 	<script src="../js/typed.min.js"></script>
 	<script>if (window.module) module = window.module;</script>
 
