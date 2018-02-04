@@ -1,7 +1,7 @@
 body {
 	background-color: #607063;
 	background-image: url('../img/fabric-seamless.jpg');
-	animation: backgroundpan 1.5s linear infinite;
+	/*animation: backgroundpan 1.5s linear infinite;*/
 	overflow: hidden;
 }
 #grumpy {
@@ -10,7 +10,17 @@ body {
 	top: 40px;
 }
 #grumpy img {
-	height: 300px;
+	height: 200px;
+}
+@media (min-height: 700px) {
+	#grumpy img {
+		height: 250px;
+	}
+}
+@media (min-height: 750px) {
+	#grumpy img {
+		height: 300px;
+	}
 }
 #story, #instructions, #domgame {
 	display: block;
@@ -41,11 +51,14 @@ body {
 	position: absolute;
 	height: auto;
 	width: 200px;
+	left: 15px;
 	transition: .2s all linear;
+	z-index: 100;
 }
-#needle img {
+#needle-img {
 	height: auto;
 	width: 100%;
+	transform-origin: 0% 50%;
 	transition: .2s all linear;
 }
 #instructions p {
@@ -62,6 +75,7 @@ body {
 	text-align: center;
 }
 #story-message {
+	margin-top: 30px;
 	font-size: 72px;
 }
 
@@ -84,6 +98,28 @@ body {
 	width: 1px;
 	height: 1px;
 	position: absolute;
-	left: -10000px;
-	top: -10000px;
+	left: -100000px;
+	top: -100000px;
+}
+
+.scissors, .thread {
+	position: absolute;
+	display: block;
+	width: 200px;
+	height: 200px;
+	background-size: 200px 200px;
+	left: 100000px;
+	background-image: url('../img/scissors.gif');
+	background-repeat: no-repeat;
+	background-position: center center;
+	transform: rotate(180deg);
+	z-index: 90;
+}
+
+.thread {
+	background-image: url('../img/spool.png');
+	transform: rotate(0deg);
+	width: 100px;
+	height: 100px;
+	background-size: 100px 100px;
 }

@@ -28,14 +28,16 @@ function story() {
 			"Allow me to introduce myself.",
 			"My name is Mr. Grumpy ButtonEyes.^250.^250.^250 The third.",
 			"I have a slight problem.^100",
-			"I've <strong>LOST</strong> one of my BEAUTIFUL button eyes!",
-			"This is U^100N^100A^100C^100C^100E^100P^100T^100A^100B^100L^100E^100!^250 ABSOLUTELY <strong>UNACCEPTABLE</strong>!",
-			"GO!^100 <strong>GO!</strong>^100 AT <strong>ONCE</strong>!^250 You <strong>MUST</strong> find it for me!",
-			"I <strong>B^100E^100L^100I^100E^100V^100E^100 in you</strong>,^200 FluffNeedle!!!!!!!!^2500",
+			"Someone <strong>STOLE</strong> one of my BEAUTIFUL button eyes!",
+			"This is T^100E^100R^100R^100I^100B^100L^100E!^250!",
+			"An absolute <strong>OUTRAGE</strong>!^250",
+			"Say,^250 FluffNeedle^100.^100.^100.^100 you'll help me! ^100.^100.^100.^100 Won't you?^300",
+			"Of course! How generous of you!!^250",
+			"I <strong>b^100e^100l^100i^100e^100v^100e</strong>^100 in you,^200 FluffNeedle!!!!!!!!^2500",
 		],
 		typeSpeed: 30,
 		startDelay: 500,
-		backDelay: 1100,
+		backDelay: 1500,
 		preStringTyped: showGrumpy,
 		fadeOut: remote.getGlobal('settings').less_movement,
 		loop: false,
@@ -62,6 +64,8 @@ function showGrumpy(arrayPos, typed) {
 		$("#grumpy img").shake({ direction: "up", times: 6 });
 		playaudio("#grumpy-theme");
 		$("#grumpy img").attr("src", "../img/grumpy-happy.png");
+	} else if (arrayPos == 10) {
+		$("#grumpy img").shake({ direction: "up", times: 6 });
 	}
 }
 
@@ -72,13 +76,16 @@ function instructions() {
 	$("#story").fadeOut();
 }
 
-var needle = { x: 0, y: 0 }
+var needle = { x: 0, y: 0, angle: 0 }
 
 var game_objects = [];
+
+var step_size = 50;
 
 function resetNeedle() {
 	needle.x = 0;
 	needle.y = Math.round(window.innerHeight / 2);
+	needle.angle = 0;
 }
 
 function startGame() {
@@ -88,19 +95,49 @@ function startGame() {
 	resetNeedle();
 	$("#instructions").fadeOut();
 	Step();
+	genScissors();
+	genThread();
+}
+
+function genScissors() {
+	game_objects.push(new Scissors());
+	setTimeout(genScissors, getRandomInt(200, 1500))
+}
+
+function genThread() {
+	game_objects.push(new Thread());
+	setTimeout(genThread, getRandomInt(5000, 10000))
 }
 
 function draw() {
+	document.getElementById("needle").style.top = needle.y + "px";
+	document.getElementById("needle-img").style.transform = "rotate(" + needle.angle + "deg)";
+	if (!remote.getGlobal('settings').less_movement) {
+		document.body.style.backgroundPosition = (-1 * needle.x) + "px 0px"
+	}
 }
 function Step() {
-	needleTop = $("#needle").position().top;
-	if (key_down && needleTop < (window.innerHeight - 20)) {
-		$("#needle").css("top", needleTop + 50);
+	if (key_down && !key_up && needle.y < (window.innerHeight - 60)) {
+		needle.y += 40;
+		needle.angle = 30;
+	} else if (key_up && !key_down && needle.y > 40) {
+		needle.y -= 40;
+		needle.angle = -30;
+	} else if (!key_up && !key_down) {
+		needle.angle = 0;
 	}
-	if (key_up && needleTop > 20) {
-		$("#needle").css("top", needleTop - 50);
+	needle.x += step_size;
+	for (var i = 0; i < game_objects.length; i++) {
+		let obj = game_objects[i];
+		obj.step();
+		if (obj.x < -200) {
+			game_objects.splice(i, 1);
+		}
+		obj.draw();
 	}
-	setTimeout(Step, 30);
+	console.log(game_objects);
+	draw();
+	setTimeout(Step, 50);
 }
 function Space() {
 	if (story_playing) {
@@ -114,18 +151,8 @@ function Up() {
 function Down() {
 }
 function KeyDown() {
-	if (!(story_playing || instructions_open)) {
-		if (key_down === true) {
-			$("#needle img").css("transform", "rotate(20deg)");
-		} else if (key_up === true) {
-			$("#needle img").css("transform", "rotate(-20deg)");
-		}
-	}
 }
 function KeyUp() {
-	if (!key_down && !key_up) {
-		$("#needle img").css("transform", "rotate(0deg)");
-	}
 }
 function Left() {
 }
@@ -142,12 +169,36 @@ function getRandomInt(min, max) {
 
 class Scissors {
 	constructor() {
-		this.x = getRandomInt(game.x + window.innerWidth, game.x + (window.innerWidth * 2));
-		this.y = getRandomInt(30, window.innerHeight - 30);
-		this.rot = getRandomInt(140, 220);
+		this.x = needle.x + (window.innerWidth * 2);
+		this.y = getRandomInt(200, window.innerHeight - 200);
+
+		this.speed = step_size + getRandomInt(-20, 10);
+		if (this.speed < 10) {
+			this.speed = 10;
+		}
+		this.el = $("<div class='scissors'></div>");
+		$(this.el).css("top", this.y).appendTo("#domgame");
+	}
+	step() {
+		this.x -= this.speed;
 	}
 	draw() {
-
+		$(this.el).css("left", this.x);
 	}
 }
 
+class Thread {
+	constructor() {
+		this.x = needle.x + (window.innerWidth * 3);
+		this.y = getRandomInt(200, window.innerHeight - 200);
+
+		this.el = $("<div class='thread'></div>");
+		$(this.el).css("top", this.y).appendTo("#domgame");
+	}
+	step() {
+		this.x -= step_size;
+	}
+	draw() {
+		$(this.el).css("left", this.x);
+	}
+}
