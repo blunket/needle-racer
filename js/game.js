@@ -11,11 +11,12 @@ function resizeCanvas() {
 */
 
 if (remote.getGlobal('settings').less_movement) {
-	$("#story-hint, #instructions-hint").css("animation", "none");
+	$("#story-hint, #instructions-hint, #gameover-hint").css("animation", "none");
 }
 
 var story_playing = true;
 var instructions_open = false;
+var game_over = false;
 story();
 
 var typed;
@@ -33,7 +34,7 @@ function story() {
 			"An absolute <strong>OUTRAGE</strong>!^250",
 			"Say,^250 FluffNeedle^100.^100.^100.^100 you'll help me! ^100.^100.^100.^100 Won't you?^300",
 			"Of course! How generous of you!!^250",
-			"I <strong>b^100e^100l^100i^100e^100v^100e</strong>^100 in you,^200 FluffNeedle!!!!!!!!^2500",
+			"I <strong>b^100e^100l^100i^100e^100v^100e</strong>^100 in you,^200 FluffNeedle!!!!!!!!^3000",
 		],
 		typeSpeed: 30,
 		startDelay: 500,
@@ -47,11 +48,10 @@ function story() {
 	});
 	setTimeout(function(){
 		$("#story-hint").fadeIn();
-	}, 5000);
+	}, 7000);
 }
 
 function showGrumpy(arrayPos, typed) {
-	console.log(arrayPos);
 	if (arrayPos == 3) {
 		$("#grumpy").fadeIn();
 	} else if (arrayPos == 5) {
@@ -76,7 +76,7 @@ function instructions() {
 	$("#story").fadeOut();
 }
 
-var needle = { x: 0, y: 0, angle: 0 }
+var needle = { x: 0, y: 0, angle: 0, score: 0 }
 
 var game_objects = [];
 
@@ -89,6 +89,7 @@ function resetNeedle() {
 }
 
 function startGame() {
+	game_over = false;
 	story_playing = false;
 	instructions_open = false;
 	playaudio("#game-theme");
@@ -99,14 +100,48 @@ function startGame() {
 	genThread();
 }
 
+function endGame() {
+	game_over = true;
+	$("#needle").remove();
+	$("#gameover").css("display","flex").hide().fadeIn('slow');
+	$("#score").text(needle.score + (needle.x / step_size));
+	$("#gameover-score span").text(needle.score + (needle.x / step_size));
+	setTimeout(function() {
+		$("#gameover img").fadeIn('slow')
+	}, 1000);
+	setTimeout(function() {
+		$("#gameover-score").fadeIn('slow')
+		$("#gameover-hint").fadeIn('slow')
+
+		typed = new Typed('#gameover-msg', {
+			strings: [
+				"Come on, FluffNeedle!!!",
+				"FluffNeedle!! Don't give up!!!",
+				"You can do it, FluffNeedle!",
+				"My button eye!! Lost FOREVER!!! NOOO!!",
+				"Don't quit now, FluffNeedle!!!",
+			],
+			typeSpeed: 100,
+			startDelay: 100,
+			fadeOut: false,
+			backDelay: 5000,
+			loop: true,
+			shuffle: true,
+			smartBackspace: false,
+			showCursor: false,
+			onComplete: instructions
+		});
+	}, 2000);
+}
+
 function genScissors() {
 	game_objects.push(new Scissors());
-	setTimeout(genScissors, getRandomInt(200, 1500))
+	setTimeout(genScissors, getRandomInt(600, 2500));
 }
 
 function genThread() {
 	game_objects.push(new Thread());
-	setTimeout(genThread, getRandomInt(5000, 10000))
+	setTimeout(genThread, getRandomInt(5000, 10000));
 }
 
 function draw() {
@@ -117,26 +152,37 @@ function draw() {
 	}
 }
 function Step() {
-	if (key_down && !key_up && needle.y < (window.innerHeight - 60)) {
-		needle.y += 40;
-		needle.angle = 30;
-	} else if (key_up && !key_down && needle.y > 40) {
-		needle.y -= 40;
-		needle.angle = -30;
-	} else if (!key_up && !key_down) {
-		needle.angle = 0;
+	if (!game_over) {
+		if (key_down && !key_up && needle.y < (window.innerHeight - 60)) {
+			needle.y += 40;
+			needle.angle = 30;
+		} else if (key_up && !key_down && needle.y > 40) {
+			needle.y -= 40;
+			needle.angle = -30;
+		} else if (!key_up && !key_down) {
+			needle.angle = 0;
+		}
+		needle.x += step_size;
 	}
-	needle.x += step_size;
 	for (var i = 0; i < game_objects.length; i++) {
 		let obj = game_objects[i];
 		obj.step();
-		if (obj.x < -200) {
+		if (obj.x < 0) {
+			$(obj.el).remove();
 			game_objects.splice(i, 1);
+		}
+		if (obj.x > -50 && obj.x < 220 && obj.y <= needle.y && obj.y + 200 >= needle.y) {
+			if (!game_over) {
+				obj.collide();
+				game_objects.splice(i, 1);
+			}
 		}
 		obj.draw();
 	}
-	console.log(game_objects);
-	draw();
+	if (!game_over) {
+		document.getElementById("score").innerText = needle.score + (needle.x / step_size);
+		draw();
+	}
 	setTimeout(Step, 50);
 }
 function Space() {
@@ -144,20 +190,16 @@ function Space() {
 		instructions();
 	} else if (instructions_open) {
 		startGame();
+	} else if (game_over) {
+		return Esc();
 	}
 }
-function Up() {
-}
-function Down() {
-}
-function KeyDown() {
-}
-function KeyUp() {
-}
-function Left() {
-}
-function Right() {
-}
+function Up() {}
+function Down() {}
+function KeyDown() {}
+function KeyUp() {}
+function Left() {}
+function Right() {}
 function Enter() { return Space(); }
 function Esc() {
 	window.location = 'title.html';
@@ -169,8 +211,13 @@ function getRandomInt(min, max) {
 
 class Scissors {
 	constructor() {
-		this.x = needle.x + (window.innerWidth * 2);
+		this.x = window.innerWidth * 2;
 		this.y = getRandomInt(200, window.innerHeight - 200);
+
+		this.dodge = ((needle.x / step_size) > 100) && (Math.random() >= 0.8);
+		this.direction = (Math.random() >= 0.5);
+		this.minY = 10;
+		this.maxY = window.innerHeight - 200;
 
 		this.speed = step_size + getRandomInt(-20, 10);
 		if (this.speed < 10) {
@@ -179,26 +226,58 @@ class Scissors {
 		this.el = $("<div class='scissors'></div>");
 		$(this.el).css("top", this.y).appendTo("#domgame");
 	}
+	switchDirection() {
+		this.direction = !this.direction;
+	}
 	step() {
 		this.x -= this.speed;
+		if (this.dodge) {
+			if (this.direction) {
+				this.y -= 20;
+				if (this.y <= this.minY) {
+					this.switchDirection();
+				}
+			} else {
+				this.y += 20;
+				if (this.y >= this.maxY) {
+					this.switchDirection();
+				}
+			}
+		}
 	}
 	draw() {
 		$(this.el).css("left", this.x);
+		if (this.dodge) {
+			$(this.el).css("top", this.y);
+		}
+	}
+	collide() {
+		$(this.el).remove();
+		endGame();
 	}
 }
 
 class Thread {
 	constructor() {
-		this.x = needle.x + (window.innerWidth * 3);
+		this.x = window.innerWidth * 3;
 		this.y = getRandomInt(200, window.innerHeight - 200);
 
 		this.el = $("<div class='thread'></div>");
 		$(this.el).css("top", this.y).appendTo("#domgame");
+		if (remote.getGlobal('settings').less_movement) {
+			$(this.el).css("animation", "none");
+		}
 	}
 	step() {
 		this.x -= step_size;
 	}
 	draw() {
 		$(this.el).css("left", this.x);
+	}
+	collide() {
+		$(this.el).fadeOut(300, function(){
+			$(this).remove();
+		});
+		needle.score += (needle.x / step_size);
 	}
 }
